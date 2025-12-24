@@ -1,0 +1,27 @@
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Credentials (never commit these!)
+*.keys.json
+*credentials*.json
+*.secret
+.env
+.env.local
+
+# Logseq local files
+logseq/.recycle/
+logseq/bak/
+.logseq/
+
+# Temporary files
+*.tmp
+*.temp
+*.log
