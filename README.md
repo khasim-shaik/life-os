@@ -71,7 +71,7 @@ Everything is prioritized by your values (you define these):
 
 - **Logseq** - Your knowledge base and task manager
 - **Google Calendar** - Read/write events and time blocks
-- **Gmail** - Surface important emails (coming soon)
+- **Gmail** - Surface important emails from key contacts
 
 ### AI Capabilities
 
@@ -150,7 +150,7 @@ Your feedback will shape the product.
 - [x] Core Logseq integration
 - [x] Claude Code commands
 - [x] Google Calendar MCP
-- [ ] Gmail MCP (in progress)
+- [x] Gmail MCP
 - [ ] Mobile-friendly interface
 - [ ] Team/family shared goals
 - [ ] Analytics dashboard

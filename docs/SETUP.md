@@ -169,15 +169,78 @@ claude mcp list
 4. Grant the requested permissions
 5. Close the browser and return to Claude Code
 
-## Step 5: Update Your Configuration
+## Step 5: Set Up Gmail Integration
 
-### 5.1 Update Prayer Times
+### 5.1 Enable Gmail API
+
+1. Go to [Google Cloud Console](https://console.cloud.google.com)
+2. Select your **Life OS** project
+3. Go to **APIs & Services** → **Library**
+4. Search for **Gmail API** and click **Enable**
+
+### 5.2 Add Gmail Scopes
+
+1. Go to **APIs & Services** → **OAuth consent screen**
+2. Click **Data Access** → **Add or remove scopes**
+3. Add these Gmail scopes:
+   - `https://www.googleapis.com/auth/gmail.modify`
+   - `https://www.googleapis.com/auth/gmail.compose`
+   - `https://www.googleapis.com/auth/gmail.send`
+   - `https://www.googleapis.com/auth/gmail.readonly`
+4. Click **Update** and **Save**
+
+### 5.3 Add Yourself as Test User
+
+1. Go to **Audience** in OAuth consent screen
+2. Under **Test users**, click **+ Add Users**
+3. Add your Gmail address
+4. Click **Save**
+
+### 5.4 Set Up Gmail MCP Credentials
+
+```bash
+# Create Gmail MCP config directory
+mkdir -p ~/.gmail-mcp
+
+# Copy your OAuth credentials
+cp ~/.config/life-os/gcp-oauth.keys.json ~/.gmail-mcp/gcp-oauth.keys.json
+```
+
+### 5.5 Authenticate Gmail
+
+```bash
+# Run the authentication command
+npx @shinzolabs/gmail-mcp auth
+```
+
+A browser will open:
+1. Sign in with your Google account
+2. Click "Advanced" → "Go to Life OS (unsafe)" (it's safe, just unverified)
+3. Grant all requested permissions
+4. Return to terminal - you should see success message
+
+### 5.6 Add Gmail MCP to Claude Code
+
+```bash
+claude mcp add-json gmail '{"type":"stdio","command":"npx","args":["-y","@shinzolabs/gmail-mcp"]}'
+```
+
+### 5.7 Verify Gmail Connection
+
+```bash
+claude mcp list
+# Should show: gmail: npx -y @shinzolabs/gmail-mcp - ✓ Connected
+```
+
+## Step 6: Update Your Configuration
+
+### 6.1 Update Prayer Times
 
 Edit `pages/Prayer Times.md` in Logseq with your local prayer times.
 
 Use [IslamicFinder](https://www.islamicfinder.org/) or your local mosque times.
 
-### 5.2 Customize The Way
+### 6.2 Customize The Way
 
 Edit `pages/The Way.md` in Logseq:
 
@@ -185,14 +248,14 @@ Edit `pages/The Way.md` in Logseq:
 2. Adjust the value hierarchy if needed
 3. Add your guiding principles
 
-### 5.3 Add Important Contacts
+### 6.3 Add Important Contacts
 
 Edit `pages/Important Contacts.md`:
 
 1. Add email addresses you want surfaced in morning briefings
 2. Organize by category (Legal, Medical, Family, Work, etc.)
 
-## Step 6: Update Command Paths
+## Step 7: Update Command Paths
 
 The slash commands reference a specific Logseq path. Update them for your setup:
 
@@ -212,7 +275,7 @@ done
 
 Or manually edit each command file and update the paths.
 
-## Step 7: Test the Setup
+## Step 8: Test the Setup
 
 ### Restart Claude Code
 
@@ -283,7 +346,9 @@ You should see:
 
 | File | Purpose |
 |------|---------|
-| `~/.config/life-os/gcp-oauth.keys.json` | Google OAuth credentials |
+| `~/.config/life-os/gcp-oauth.keys.json` | Google OAuth credentials (Calendar) |
+| `~/.gmail-mcp/gcp-oauth.keys.json` | Google OAuth credentials (Gmail) |
+| `~/.gmail-mcp/credentials.json` | Gmail refresh token (auto-generated) |
 | `.claude/commands/*.md` | Claude Code slash commands |
 | `~/Documents/LifeOS/pages/` | Logseq pages (your graph) |
 
